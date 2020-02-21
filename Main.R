@@ -96,19 +96,8 @@ min(mat) # -1.154584
 max(mat) # 2.62052
 # Now let's visualize this random data and create a heatmap with default settings
 ComplexHeatmap::Heatmap(mat)
-
-# save as pdf and send to figures of interest folder!
-pdf(file=paste(path.figures,"Default Random Heatmap.pdf",sep="/"))
-heat.colors(mat)
-dev.off()
-
-
-
-
-
-ComplexHeatmap::Heatmap(mat)
 # save as pdf and send to figures folder!
-pdf(file = paste(path.figures,"Default Random Heatmap.pdf",sep="/"))
+pdf(file = paste(path.figures,"Default Random Heatmap.pdf", sep="/"))
 ComplexHeatmap::Heatmap(mat)
 dev.off()
 
@@ -135,9 +124,17 @@ col.fun <- col_fun(seq(-3, 3))
 ComplexHeatmap::Heatmap(mat, col = col.fun)
 # the negative values are mediumvioletred and the positive are mediumspringgreen
 
+# save as pdf and send to figures folder!
+pdf(file = paste(path.figures,"Random Heatmap2.pdf", sep="/"))
+ComplexHeatmap::Heatmap(mat, col = col.fun)
+dev.off()
 
 # can also create a rainbow color scheme 
 ComplexHeatmap::Heatmap(mat, name = "mat", col = rev(rainbow(10)))
+# save as pdf and send to figures folder!
+pdf(file = paste(path.figures,"Random Heatmap3.pdf", sep="/"))
+ComplexHeatmap::Heatmap(mat, name = "mat", col = rev(rainbow(10)))
+dev.off()
 
 # if matrix is continuous, provide a vector of colours 
 # the colours will be interpolated linearly
