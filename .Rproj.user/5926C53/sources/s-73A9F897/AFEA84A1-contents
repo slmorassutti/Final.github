@@ -1,24 +1,11 @@
-#
-#
 # Main directory for Final Project
 # Created by Sam Morassutti
 # Feb 2020
 # R.version.string
 #"R version 3.6.2 (2019-12-12)"
 
-# libraries needed (a lot)
-library(dplyr)
 # libraries needed
-library(devtools)
-# and the package complex heatmap 
-install_github("jokergoo/ComplexHeatmap")
-library(circlize)
-library(cluster)
-
-
-# index 
-#
-#
+library(dplyr)
 #
 #
 #
@@ -48,6 +35,26 @@ path.finan<- paste(working.dir, "/", output.folder.names[6], "/", sep = "")
 path.results<- paste(working.dir, "/", output.folder.names[7], "/", sep = "")
 path.extr<- paste(working.dir, "/", output.folder.names[8], "/", sep = "")
 
+#
+# This file is the first step in my final project
+# It is intended for me to familiorize myself with how to construct a heatmap
+# Created by Sam Morassutti
+#
+#
+#
+# libraries needed
+library(devtools)
+install_github("jokergoo/ComplexHeatmap")
+library(circlize)
+library(cluster)
+
+# index 
+
+
+
+
+
+
 
 # This file is the first step in my final project
 # It is intended for me to familiorize myself with how to construct a heatmap
@@ -55,6 +62,13 @@ path.extr<- paste(working.dir, "/", output.folder.names[8], "/", sep = "")
 #
 #
 #
+# libraries needed
+library(devtools)
+install_github("jokergoo/ComplexHeatmap")
+library(circlize)
+library(cluster)
+
+# index 
 
 
 
@@ -107,9 +121,9 @@ dev.off()
 
 
 ComplexHeatmap::Heatmap(mat)
-# save as pdf and send to figures folder!
+# save as pdf and send to figures of interest folder!
 pdf(file = paste(path.figures,"Default Random Heatmap.pdf",sep="/"))
-ComplexHeatmap::Heatmap(mat)
+heatmap(mat)
 dev.off()
 
 
@@ -211,7 +225,7 @@ heatmap(mat, name = "mat", col = col.fun, main = "Name",
 
 
 ComplexHeatmap::Heatmap(mat, name = "mat", column_title = "column title", 
-                        row_title = "row title")
+        row_title = "row title")
 # now change the font and title the entire heatmap title
 ComplexHeatmap::Heatmap(mat, name = "mat", column_title = "title", 
                         column_title_gp = gpar(fontsize = 15, fontface = "bold"))
@@ -232,7 +246,6 @@ ComplexHeatmap::Heatmap(mat, name = "mat", column_title = "title",
 
 
 # can also turn clustering off, do for rows and then columns
-# depending on if clustering is needed or not
 ComplexHeatmap::Heatmap(mat, name = "mat", cluster_rows = FALSE)
 ComplexHeatmap::Heatmap(mat, name = "mat", cluster_columns = FALSE)
 # so odd looking!
@@ -308,6 +321,11 @@ column_title = ("Mutated genes in the Ras Raf MEK JNK signallingin the Lung Aden
 heatmap_legend_param = list(title = "Alternations", at = c("HOMDEL", "AMP", "MUT"), 
                             labels = c("Deep deletion", "Amplification", "Mutation"))
 ComplexHeatmap::oncoPrint(mat,
-                          alter_fun = alter_fun, col = col, 
-                          column_title = column_title, heatmap_legend_param = heatmap_legend_param)
+          alter_fun = alter_fun, col = col, 
+          column_title = column_title, heatmap_legend_param = heatmap_legend_param)
 
+  
+  
+  
+  
+  

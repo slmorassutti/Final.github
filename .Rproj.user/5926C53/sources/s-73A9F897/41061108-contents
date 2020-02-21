@@ -1,24 +1,11 @@
-#
-#
 # Main directory for Final Project
 # Created by Sam Morassutti
 # Feb 2020
 # R.version.string
 #"R version 3.6.2 (2019-12-12)"
 
-# libraries needed (a lot)
-library(dplyr)
 # libraries needed
-library(devtools)
-# and the package complex heatmap 
-install_github("jokergoo/ComplexHeatmap")
-library(circlize)
-library(cluster)
-
-
-# index 
-#
-#
+library(dplyr)
 #
 #
 #
@@ -48,6 +35,26 @@ path.finan<- paste(working.dir, "/", output.folder.names[6], "/", sep = "")
 path.results<- paste(working.dir, "/", output.folder.names[7], "/", sep = "")
 path.extr<- paste(working.dir, "/", output.folder.names[8], "/", sep = "")
 
+#
+# This file is the first step in my final project
+# It is intended for me to familiorize myself with how to construct a heatmap
+# Created by Sam Morassutti
+#
+#
+#
+# libraries needed
+library(devtools)
+install_github("jokergoo/ComplexHeatmap")
+library(circlize)
+library(cluster)
+
+# index 
+
+
+
+
+
+
 
 # This file is the first step in my final project
 # It is intended for me to familiorize myself with how to construct a heatmap
@@ -55,6 +62,13 @@ path.extr<- paste(working.dir, "/", output.folder.names[8], "/", sep = "")
 #
 #
 #
+# libraries needed
+library(devtools)
+install_github("jokergoo/ComplexHeatmap")
+library(circlize)
+library(cluster)
+
+# index 
 
 
 
@@ -107,9 +121,9 @@ dev.off()
 
 
 ComplexHeatmap::Heatmap(mat)
-# save as pdf and send to figures folder!
+# save as pdf and send to figures of interest folder!
 pdf(file = paste(path.figures,"Default Random Heatmap.pdf",sep="/"))
-ComplexHeatmap::Heatmap(mat)
+heatmap(mat)
 dev.off()
 
 
@@ -232,7 +246,6 @@ ComplexHeatmap::Heatmap(mat, name = "mat", column_title = "title",
 
 
 # can also turn clustering off, do for rows and then columns
-# depending on if clustering is needed or not
 ComplexHeatmap::Heatmap(mat, name = "mat", cluster_rows = FALSE)
 ComplexHeatmap::Heatmap(mat, name = "mat", cluster_columns = FALSE)
 # so odd looking!
@@ -249,65 +262,4 @@ ComplexHeatmap:: Heatmap(mat, name = "mat", row_dend_side = "right",
 
 
 
-
-
-#---------------Apply to real data set-----------------
-# expression data set from OncoPrint
-# read in data for lung adenocarcinoma
-# this data set is in complexheatmap so we can read it in directory from here
-
-mat = read.table(system.file("extdata", package = "ComplexHeatmap", 
-                             "tcga_lung_adenocarcinoma_provisional_ras_raf_mek_jnk_signalling.txt"), 
-                 header = TRUE, stringsAsFactors = FALSE, sep = "\t")
-# look at structure
-str(mat)
-# there are three mutation types: MUT, AMP, HOMDEL
-# check is there are na's in the data set
-mat[is.na(mat)] = ""
-# look at row names and process the data set 
-rownames(mat) = mat[, 1]
-mat = mat[, -1]
-mat=  mat[, -ncol(mat)]
-mat = t(as.matrix(mat))
-mat[1:3, 1:3]
-
-
-# identifying mutations with colours
-# now that we know there are three mutation types (alterations)
-# let's give each one a colour so that it can be identified 
-
-col = c("HOMDEL" = "blue", "AMP" = "red", "MUT" = "#008000")
-alter_fun = list(
-  background = function(x, y, w, h) {
-    grid.rect(x, y, w-unit(0.5, "mm"), h-unit(0.5, "mm"), 
-              gp = gpar(fill = "#CCCCCC", col = NA))
-  },
-  # big blue
-  HOMDEL = function(x, y, w, h) {
-    grid.rect(x, y, w-unit(0.5, "mm"), h-unit(0.5, "mm"), 
-              gp = gpar(fill = col["HOMDEL"], col = NA))
-  },
-  # bug red
-  AMP = function(x, y, w, h) {
-    grid.rect(x, y, w-unit(0.5, "mm"), h-unit(0.5, "mm"), 
-              gp = gpar(fill = col["AMP"], col = NA))
-  },
-  # small green
-  MUT = function(x, y, w, h) {
-    grid.rect(x, y, w-unit(0.5, "mm"), h*0.33, 
-              gp = gpar(fill = col["MUT"], col = NA))
-  }
-)
-# check to see if alterations are set to correct color 
-col
-# okay it seems to be yay
-
-
-# create title for plot 
-column_title = ("Mutated genes in the Ras Raf MEK JNK signallingin the Lung Adenocarcinoma")
-heatmap_legend_param = list(title = "Alternations", at = c("HOMDEL", "AMP", "MUT"), 
-                            labels = c("Deep deletion", "Amplification", "Mutation"))
-ComplexHeatmap::oncoPrint(mat,
-                          alter_fun = alter_fun, col = col, 
-                          column_title = column_title, heatmap_legend_param = heatmap_legend_param)
 
