@@ -95,10 +95,13 @@ mat
 min(mat) # -1.154584
 max(mat) # 2.62052
 # Now let's visualize this random data and create a heatmap with default settings
-ComplexHeatmap::Heatmap(mat)
+# yayayayayayay
+# to get the lendeng and legend name
+# use function name = "", then put the name of legend wooooo
+ComplexHeatmap::Heatmap(mat, name = "mat")
 # save as pdf and send to figures folder!
 pdf(file = paste(path.figures,"Default Random Heatmap.pdf", sep="/"))
-ComplexHeatmap::Heatmap(mat)
+ComplexHeatmap::Heatmap(mat, name = "mat")
 dev.off()
 
 
@@ -121,12 +124,12 @@ dev.off()
 
 col_fun = colorRamp2(c(-2, 0, 2), c("mediumvioletred", "white", "mediumspringgreen"))
 col.fun <- col_fun(seq(-3, 3))
-ComplexHeatmap::Heatmap(mat, col = col.fun)
+ComplexHeatmap::Heatmap(mat, name = "mat", col = col.fun)
 # the negative values are mediumvioletred and the positive are mediumspringgreen
 
 # save as pdf and send to figures folder!
 pdf(file = paste(path.figures,"Random Heatmap2.pdf", sep="/"))
-ComplexHeatmap::Heatmap(mat, col = col.fun)
+ComplexHeatmap::Heatmap(mat, name = "mat", col = col.fun)
 dev.off()
 
 # can also create a rainbow color scheme 
