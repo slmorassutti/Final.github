@@ -7,6 +7,7 @@
 #"R version 3.6.2 (2019-12-12)"
 
 # libraries needed (a lot)
+library(ComplexHeatmap)
 library(dplyr)
 # libraries needed
 library(devtools)
@@ -167,8 +168,8 @@ dev.off()
 
 # let's try by making the na values black
 ComplexHeatmap::Heatmap(mat, name = "mat", na_col = "black")
-# no na values.....
-# back to default colour scheme
+# it appears that there are no na values.....
+# the plot is back to default colour scheme
 
 #---------- borderds and spacing-------------
 # create border by using the border true fucntion
@@ -260,7 +261,9 @@ mat = read.table(system.file("extdata", package = "ComplexHeatmap",
 # look at structure
 str(mat)
 # there are three mutation types: MUT, AMP, HOMDEL
-# check is there are na's in the data set
+# also a lot of NA
+# but use the offical way to check if there are 
+# na's in the data set
 mat[is.na(mat)] = ""
 # look at row names and process the data set 
 rownames(mat) = mat[, 1]
@@ -268,16 +271,18 @@ mat = mat[, -1]
 mat=  mat[, -ncol(mat)]
 mat = t(as.matrix(mat))
 mat[1:3, 1:3]
+# this removed a lot of values... but I am still not quite sure if it 
+# removed all of the NA values 
 
 
-# identifying mutations with colours
-# now that we know there are three mutation types (alterations)
+# regardless, let;s move on to: identifying mutations with colours
+# now that we know there are three mutation types/alterations
+
 # let's give each one a colour so that it can be identified 
-
 col = c("HOMDEL" = "blue", "AMP" = "red", "MUT" = "#008000")
 alter_fun = list(
   background = function(x, y, w, h) {
-    grid.rect(x, y, w-unit(0.5, "mm"), h-unit(0.5, "mm"), 
+    grid::grid.rect()(x, y, w-unit(0.5, "mm"), h-unit(0.5, "mm"), 
               gp = gpar(fill = "#CCCCCC", col = NA))
   },
   # big blue
@@ -287,25 +292,88 @@ alter_fun = list(
   },
   # bug red
   AMP = function(x, y, w, h) {
-    grid.rect(x, y, w-unit(0.5, "mm"), h-unit(0.5, "mm"), 
+    grid::grid.rect()(x, y, w-unit(0.5, "mm"), h-unit(0.5, "mm"), 
               gp = gpar(fill = col["AMP"], col = NA))
   },
   # small green
   MUT = function(x, y, w, h) {
-    grid.rect(x, y, w-unit(0.5, "mm"), h*0.33, 
+    grid::grid.rect()(x, y, w-unit(0.5, "mm"), h*0.33, 
               gp = gpar(fill = col["MUT"], col = NA))
   }
 )
 # check to see if alterations are set to correct color 
 col
-# okay it seems to be yay
+# okay it seems to be all good yay
+# can it be translated into a plot though????
 
 
 # create title for plot 
-column_title = ("Mutated genes in the Ras Raf MEK JNK signallingin the Lung Adenocarcinoma")
+column_title = ("Mutated genes in the Ras Raf MEK JNK signalling the Lung Adenocarcinoma")
 heatmap_legend_param = list(title = "Alternations", at = c("HOMDEL", "AMP", "MUT"), 
                             labels = c("Deep deletion", "Amplification", "Mutation"))
+ComplexHeatmap::oncoPrint(mat, alter_fun = alter_fun, col = col, column_title = column_title, 
+                          heatmap_legend_param = heatmap_legend_param)
+
+# this doesn;t seem to want to work...
+# okay let's try without the package name in front 
+
+oncoPrint(mat, alter_fun = alter_fun, col = col, column_title = column_title, 
+          heatmap_legend_param = heatmap_legend_param)
+# mmmmm
+# i am confused about why this isn't working 
+#-----------why-----you no work----------????------------
+?grid::grid.rect()
+
+# ------remove emplty rows-------------
+# the default setting is that is samples/genes do not have mutations
+# so if they have an NA, they will remain in the data set
+# sometimes this is not useful so it is better to remove them
+# even though the above visualiation didn't work, let's move a head
+# and try and remove some NA's even though I am pretty sure I already did ....
+
+
 ComplexHeatmap::oncoPrint(mat,
-                          alter_fun = alter_fun, col = col, 
-                          column_title = column_title, heatmap_legend_param = heatmap_legend_param)
+          alter_fun = alter_fun, col = col, 
+          remove_empty_columns = TRUE, remove_empty_rows = TRUE,
+          column_title = column_title, heatmap_legend_param = heatmap_legend_param)
+# mmm so this is not working
+# just resulting in a box...
+str(mat)
+# let's trya dn look just at mat and see what has changed
+ComplexHeatmap::Heatmap(mat, name = "mat")
+# OKAY WHAT IS HAPPENING
+# that is not at all what this is supposed to be happening... but very cool
+# eveyrtime I run it there are different colours...
+pdf(file = paste(path.figures,"funky.lung.pdf", sep="/"))
+ComplexHeatmap::Heatmap(mat, name = "mat")
+dev.off()
+
+
+# so at this point, basically everything in this tutorial has stopped working
+# I am unclear as to why because all of the logical operations are not different
+# BUTTTTTTTTTTT they aren't working 
+# or even if i copy and paste a command it is not working
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
