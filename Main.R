@@ -95,10 +95,13 @@ mat
 min(mat) # -1.154584
 max(mat) # 2.62052
 # Now let's visualize this random data and create a heatmap with default settings
-ComplexHeatmap::Heatmap(mat)
+# yayayayayayay
+# to get the lendeng and legend name
+# use function name = "", then put the name of legend wooooo
+ComplexHeatmap::Heatmap(mat, name = "mat")
 # save as pdf and send to figures folder!
 pdf(file = paste(path.figures,"Default Random Heatmap.pdf", sep="/"))
-ComplexHeatmap::Heatmap(mat)
+ComplexHeatmap::Heatmap(mat, name = "mat")
 dev.off()
 
 
@@ -121,12 +124,12 @@ dev.off()
 
 col_fun = colorRamp2(c(-2, 0, 2), c("mediumvioletred", "white", "mediumspringgreen"))
 col.fun <- col_fun(seq(-3, 3))
-ComplexHeatmap::Heatmap(mat, col = col.fun)
+ComplexHeatmap::Heatmap(mat, name = "mat", col = col.fun)
 # the negative values are mediumvioletred and the positive are mediumspringgreen
 
 # save as pdf and send to figures folder!
 pdf(file = paste(path.figures,"Random Heatmap2.pdf", sep="/"))
-ComplexHeatmap::Heatmap(mat, col = col.fun)
+ComplexHeatmap::Heatmap(mat, name = "mat", col = col.fun)
 dev.off()
 
 # can also create a rainbow color scheme 
@@ -170,6 +173,9 @@ ComplexHeatmap::Heatmap(mat, name = "mat", na_col = "black")
 #---------- borderds and spacing-------------
 # create border by using the border true fucntion
 ComplexHeatmap::Heatmap(mat, name = "mat", border = TRUE)
+pdf(file = paste(path.figures,"Random Heatmap4 border.pdf", sep="/"))
+ComplexHeatmap::Heatmap(mat, name = "mat", border = TRUE)
+dev.off()
 
 
 # add spacing between each value
@@ -183,37 +189,22 @@ ComplexHeatmap::Heatmap(mat, name = "mat", border = TRUE)
 # graphic paramaters can be set by the function gpar
 ?gpar()
 # it is used by get.gpar()
-get.gpar # idk why this isn't working
-get.gpar(mat) # still not working
 
-# mmmmmmm boooooo
-ComplexHeatmap::Heatmap(mat, name = "mat", rect_gp = gpar(col = "white", lwd = 2))
-
-
-# try with another command row_title_gp, or column_title_gp
-heatmap(mat, name = "mat", col = col.fun, row_title = "Name", 
-        column_title = "Hi")
-# mmmm still no
-# try the regular plot title function main
-heatmap(mat, name = "mat", col = col.fun, main = "Name", 
-        ylab = "Right Side", xlab = "bottom")
-# wooo!!! 
-# not sure how to get labels on the left dendrograms....
-# but still cool!
-# interesting that normal commands work in this package instead of the
-# the suggested ones...
+# use the command row_title_gp, or column_title_gp
+ComplexHeatmap::Heatmap(mat, name = "mat", col = col.fun, row_title = "Title of rows", 
+        column_title = "Title of columns")
+# save as pdf and send to figures folder
+pdf(file = paste(path.figures,"Random Heatmap titles.1.pdf", sep="/"))
+ComplexHeatmap::Heatmap(mat, name = "mat", col = col.fun, row_title = "Title of rows", 
+                        column_title = "Title of columns")
+dev.off()
 
 
-# come back and figure out gpar and why it is being mean
-
-
-ComplexHeatmap::Heatmap(mat, name = "mat", column_title = "column title", 
-                        row_title = "row title")
-# now change the font and title the entire heatmap title
+# now try change the font and title the entire heatmap title
 ComplexHeatmap::Heatmap(mat, name = "mat", column_title = "title", 
                         column_title_gp = gpar(fontsize = 15, fontface = "bold"))
 # jk gpar is mean
-
+# mmmm okay I don't know why this isn't working 
 
 # title angles
 # in this package you can also change the angle of the titles
@@ -231,8 +222,17 @@ ComplexHeatmap::Heatmap(mat, name = "mat", column_title = "title",
 # can also turn clustering off, do for rows and then columns
 # depending on if clustering is needed or not
 ComplexHeatmap::Heatmap(mat, name = "mat", cluster_rows = FALSE)
+# save and send to figures!
+pdf(file = paste(path.figures,"Random Heatmap cluster.1.pdf", sep="/"))
+ComplexHeatmap::Heatmap(mat, name = "mat", cluster_rows = FALSE)
+dev.off()
+
 ComplexHeatmap::Heatmap(mat, name = "mat", cluster_columns = FALSE)
 # so odd looking!
+# save and send to figures
+pdf(file = paste(path.figures,"Random Heatmap cluster.2.pdf", sep="/"))
+ComplexHeatmap::Heatmap(mat, name = "mat", cluster_columns = FALSE)
+dev.off()
 
 
 # to show clustering on specififcc sides
@@ -240,10 +240,11 @@ ComplexHeatmap::Heatmap(mat, name = "mat", cluster_columns = FALSE)
 # the bottom of the columns
 ComplexHeatmap:: Heatmap(mat, name = "mat", row_dend_side = "right", 
                          column_dend_side = "bottom")
-
-
-
-
+# save figure and send to folder!
+pdf(file = paste(path.figures,"Random Heatmap cluster.3.pdf", sep="/"))
+ComplexHeatmap:: Heatmap(mat, name = "mat", row_dend_side = "right", 
+                         column_dend_side = "bottom")
+dev.off()
 
 
 
