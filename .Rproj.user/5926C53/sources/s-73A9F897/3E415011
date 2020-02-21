@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1582243937986.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1241320424",
+    "id" : "3E415011",
+    "lastKnownWriteTime" : 1582243960,
+    "last_content_update" : 1582243960687,
+    "path" : "~/Desktop/Data Analysis in R/Final.github/test.R",
+    "project_path" : "test.R",
+    "properties" : {
+        "cursorPosition" : "3,1",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
