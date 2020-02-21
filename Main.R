@@ -344,7 +344,7 @@ ComplexHeatmap::Heatmap(mat, name = "mat")
 # OKAY WHAT IS HAPPENING
 # that is not at all what this is supposed to be happening... but very cool
 # eveyrtime I run it there are different colours...
-pdf(file = paste(path.figures,"funky.lung.pdf", sep="/"))
+pdf(file = paste(path.figures,"funky.lung.2.pdf", sep="/"))
 ComplexHeatmap::Heatmap(mat, name = "mat")
 dev.off()
 
