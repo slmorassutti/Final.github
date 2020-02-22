@@ -275,9 +275,11 @@ View(lung_adenocarcinoma_ras_raf_mek_jnk_signalling)
 # now, just to see what happens, let's create a plot with the imported data
 # with default complexheatmap settings... only specify legend name "mat"
 ComplexHeatmap:: Heatmap(mat, name = "mat")
+# woah it is different this time... that is kinda awesome
+head(mat)
 # well, that is a bit ugly... what is going on with the labels 
 # let's save it for now though becasue it's so odd
-pdf(file = paste(path.figures,"lun.oddness.pdf", sep="/"))
+pdf(file = paste(path.figures,"lung.oddness.pdf", sep="/"))
 ComplexHeatmap:: Heatmap(mat, name = "mat")
 dev.off()
 
