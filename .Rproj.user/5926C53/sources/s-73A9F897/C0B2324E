@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1582325353496.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "14|33|14|48|\n15|47|59|0|\n114|61|129|0|\n132|58|165|0|\n166|15|202|0|\n",
+    "hash" : "2790975472",
+    "id" : "C0B2324E",
+    "lastKnownWriteTime" : 1582327418,
+    "last_content_update" : 1582327418670,
+    "path" : "~/Desktop/Data Analysis in R/Final.github/Potential Analysis/Troubled.Analysis.R",
+    "project_path" : "Potential Analysis/Troubled.Analysis.R",
+    "properties" : {
+        "cursorPosition" : "344,0",
+        "scrollLine" : "323",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

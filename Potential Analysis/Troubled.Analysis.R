@@ -1,63 +1,15 @@
 #
-#
-# Main directory for Final Project
+# Troubled Analysis
+# This file was created to contain all of the parts of my Final Project code that
+# either DO NOT WORK, or are confusing 
 # Created by Sam Morassutti
 # Feb 2020
 # R.version.string
 #"R version 3.6.2 (2019-12-12)"
 
-# libraries needed (a lot)
-library(ComplexHeatmap)
-library(dplyr)
-# libraries needed
-library(devtools)
-# and the package complex heatmap 
-install_github("jokergoo/ComplexHeatmap")
-library(circlize)
-library(cluster)
-
-
-# index 
+#Index
 #
 #
-#
-#
-#
-
-
-#setup working directory pathway
-working.dir <- getwd()
-
-# create all folders for this project so that it is organized & reproducible 
-# store future file names in an object... These are base folder names
-output.folder.names <- c("Clean Folder", "Figures",
-                         "Raw Data","Final R scripts","Potential Analysis",
-                         "Relevant Analysis","Results","Extra R scripts")
-
-# make all folders for this project
-# and make the folders if they don't exit yet.
-for(i in 1:length(output.folder.names))
-  if(file.exists(output.folder.names[i]) == FALSE)
-    dir.create(output.folder.names[i])
-#these are the pathways which are necessary to send graphs to the folders.
-path.clean <- paste(working.dir, "/", output.folder.names[1], "/", sep = "")
-path.figures<- paste(working.dir, "/", output.folder.names[2], "/", sep = "")
-path.raw.data<- paste(working.dir, "/", output.folder.names[3], "/", sep = "")
-path.finalR<- paste(working.dir, "/", output.folder.names[4], "/", sep = "")
-path.potan<- paste(working.dir, "/", output.folder.names[5], "/", sep = "")
-path.finan<- paste(working.dir, "/", output.folder.names[6], "/", sep = "")
-path.results<- paste(working.dir, "/", output.folder.names[7], "/", sep = "")
-path.extr<- paste(working.dir, "/", output.folder.names[8], "/", sep = "")
-
-
-# This file is the first step in my final project
-# It is intended for me to familiorize myself with how to construct a heatmap
-# Created by Sam Morassutti
-#
-#
-#
-
-
 
 #----------------------------------------------
 #----- 1 Generate a random matrix---------------
@@ -106,8 +58,9 @@ ComplexHeatmap::Heatmap(mat, name = "mat")
 dev.off()
 
 
-
-#---------- colours----------
+#----------------------------------------------------
+#---------- colours--------------------------------
+#------------------------------------------------------
 # colours are a veyr important compoent of representation of data in the matrix
 # colour mapping functions
 #allow you to create a fucntion in which a vector of values will result
@@ -157,11 +110,12 @@ dev.off()
 # and can be in character plots too if set 
 
 
-
-# -----NA---------------
+#--------------------------------------------------------------
+# -----Show NA???-------------------------------------------------------
+#------------------------------------------------------------
 # NA is able to be in matrix
 # but you can set the colour so it is identifiable
-# the default colour is grey (how do I put this in legend)
+# the default colour is grey
 # to change the colour use argument
 # na_col
 
@@ -169,19 +123,14 @@ dev.off()
 # let's try by making the na values black
 ComplexHeatmap::Heatmap(mat, name = "mat", na_col = "black")
 # it appears that there are no na values.....
+# or this just didn't work....
 # the plot is back to default colour scheme
 
-#---------- borderds and spacing-------------
-# create border by using the border true fucntion
-ComplexHeatmap::Heatmap(mat, name = "mat", border = TRUE)
-pdf(file = paste(path.figures,"Random Heatmap4 border.pdf", sep="/"))
-ComplexHeatmap::Heatmap(mat, name = "mat", border = TRUE)
-dev.off()
 
 
-# add spacing between each value
-
-#-------title-----------------
+#----------------------------------------------------------
+#-------title styles???------------------------------------------------
+#---------------------------------------------------------
 # describe what the plot is 
 # can be set by column and or row
 # add titles in the complexheatmap package
@@ -193,20 +142,22 @@ dev.off()
 
 # use the command row_title_gp, or column_title_gp
 ComplexHeatmap::Heatmap(mat, name = "mat", col = col.fun, row_title = "Title of rows", 
-        column_title = "Title of columns")
+                        column_title = "Title of columns")
 # save as pdf and send to figures folder
 pdf(file = paste(path.figures,"Random Heatmap titles.1.pdf", sep="/"))
 ComplexHeatmap::Heatmap(mat, name = "mat", col = col.fun, row_title = "Title of rows", 
                         column_title = "Title of columns")
 dev.off()
 
-
+# PROBLEM WITH TITLE STYLEEEEEEE
 # now try change the font and title the entire heatmap title
 ComplexHeatmap::Heatmap(mat, name = "mat", column_title = "title", 
                         column_title_gp = gpar(fontsize = 15, fontface = "bold"))
 # jk gpar is mean
 # mmmm okay I don't know why this isn't working 
 
+
+# COME BACK to title angles when you can actually format the font size ect
 # title angles
 # in this package you can also change the angle of the titles
 # very useful! 
@@ -249,7 +200,8 @@ dev.off()
 
 
 
-#--------------------------------------------------------------
+---------------------------------------
+  #--------------------------------------------------------------
 #---------------Apply to real data set------------------------
 #-------------------------------------------------------------
 
@@ -318,22 +270,22 @@ col = c("HOMDEL" = "blue", "AMP" = "red", "MUT" = "#008000")
 alter_fun = list(
   background = function(x, y, w, h) {
     grid::grid.rect()(x, y, w-unit(0.5, "mm"), h-unit(0.5, "mm"), 
-              gp = gpar(fill = "#CCCCCC", col = NA))
+                      gp = gpar(fill = "#CCCCCC", col = NA))
   },
   # big blue
   HOMDEL = function(x, y, w, h) {
     grid::grid.rect(x, y, w-unit(0.5, "mm"), h-unit(0.5, "mm"), 
-              gp = gpar(fill = col["HOMDEL"], col = NA))
+                    gp = gpar(fill = col["HOMDEL"], col = NA))
   },
   # bug red
   AMP = function(x, y, w, h) {
     grid::grid.rect()(x, y, w-unit(0.5, "mm"), h-unit(0.5, "mm"), 
-              gp = gpar(fill = col["AMP"], col = NA))
+                      gp = gpar(fill = col["AMP"], col = NA))
   },
   # small green
   MUT = function(x, y, w, h) {
     grid::grid.rect()(x, y, w-unit(0.5, "mm"), h*0.33, 
-              gp = gpar(fill = col["MUT"], col = NA))
+                      gp = gpar(fill = col["MUT"], col = NA))
   }
 )
 # check to see if alterations are set to correct color 
@@ -344,25 +296,52 @@ col
 #--------------------------------------------------------
 #-----------plotting mutations as colours???-------------
 #-------------------------------------------------------
+# create title for plot 
+column_title = ("Mutated genes in the Ras Raf MEK JNK signalling the Lung Adenocarcinoma")
+heatmap_legend_param = list(title = "Alternations", at = c("HOMDEL", "AMP", "MUT"), 
+                            labels = c("Deep deletion", "Amplification", "Mutation"))
+ComplexHeatmap::oncoPrint(mat, alter_fun = alter_fun, col = col, column_title = column_title, 
+                          heatmap_legend_param = heatmap_legend_param)
 
-# from here on out I am pretty stuck.....
-# all of the analysis that doesn't work, or is confusing is compliled 
-# with annotations in the potential anyalsis folder 
+# this doesn;t seem to want to work...
+# okay let's try without the package name in front 
+
+oncoPrint(mat, alter_fun = alter_fun, col = col, column_title = column_title, 
+          heatmap_legend_param = heatmap_legend_param)
+# mmmmm
+# i am confused about why this isn't working 
+#-----------why-----you no work----------????------------
+?grid::grid.rect()
+
+# ------remove emplty rows-------------
+# the default setting is that is samples/genes do not have mutations
+# so if they have an NA, they will remain in the data set
+# sometimes this is not useful so it is better to remove them
+# even though the above visualiation didn't work, let's move a head
+# and try and remove some NA's even though I am pretty sure I already did ....
 
 
+ComplexHeatmap::oncoPrint(mat,
+                          alter_fun = alter_fun, col = col, 
+                          remove_empty_columns = TRUE, remove_empty_rows = TRUE,
+                          column_title = column_title, heatmap_legend_param = heatmap_legend_param)
+# mmm so this is not working
+# just resulting in a box...
+str(mat)
+# let's trya dn look just at mat and see what has changed
+ComplexHeatmap::Heatmap(mat, name = "mat")
+# OKAY WHAT IS HAPPENING
+# that is not at all what this is supposed to be happening... but very cool
+# eveyrtime I run it there are different colours...
+pdf(file = paste(path.figures,"funky.lung.2.pdf", sep="/"))
+ComplexHeatmap::Heatmap(mat, name = "mat")
+dev.off()
 
 
-
-
-
-
-
-
-
-
-
-
-
+# so at this point, basically everything in this tutorial has stopped working
+# I am unclear as to why because all of the logical operations are not different
+# BUTTTTTTTTTTT they aren't working 
+# or even if i copy and paste a command it is not working
 
 
 

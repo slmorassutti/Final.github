@@ -1,0 +1,33 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1582324680216.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "B34DDB9",
+    "lastKnownWriteTime" : 4274000987942813700,
+    "last_content_update" : 1582324680216,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "DDAB4B08",
+        "caption" : "lung_adenocarcinoma_ras_raf_mek_jnk_signalling",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=lung_adenocarcinoma_ras_raf_mek_jnk_signalling&cache_key=DDAB4B08",
+        "displayedObservations" : "26",
+        "environment" : "",
+        "expression" : "lung_adenocarcinoma_ras_raf_mek_jnk_signalling",
+        "object" : "lung_adenocarcinoma_ras_raf_mek_jnk_signalling",
+        "preview" : "0",
+        "totalObservations" : "26",
+        "variables" : "173"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}
