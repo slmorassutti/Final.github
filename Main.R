@@ -7,7 +7,16 @@
 #"R version 3.6.2 (2019-12-12)"
 
 # libraries needed (a lot)
+source("https://bioconductor.org/biocLite.R")
+biocLite("ComplexHeatmap")
 library(ComplexHeatmap)
+
+if (!requireNamespace("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+BiocManager::install()
+BiocManager::install(version = "3.10")
+library(BiocManager)
+
 library(dplyr)
 # libraries needed
 library(devtools)
@@ -30,9 +39,8 @@ working.dir <- getwd()
 
 # create all folders for this project so that it is organized & reproducible 
 # store future file names in an object... These are base folder names
-output.folder.names <- c("Clean Folder", "Figures",
-                         "Raw Data","Final R scripts","Potential Analysis",
-                         "Relevant Analysis","Results","Extra R scripts")
+output.folder.names <- c("Clean Data", "Figures",
+                         "Raw Data","Analysis","Results")
 
 # make all folders for this project
 # and make the folders if they don't exit yet.
@@ -41,13 +49,11 @@ for(i in 1:length(output.folder.names))
     dir.create(output.folder.names[i])
 #these are the pathways which are necessary to send graphs to the folders.
 path.clean <- paste(working.dir, "/", output.folder.names[1], "/", sep = "")
-path.figures<- paste(working.dir, "/", output.folder.names[2], "/", sep = "")
-path.raw.data<- paste(working.dir, "/", output.folder.names[3], "/", sep = "")
-path.finalR<- paste(working.dir, "/", output.folder.names[4], "/", sep = "")
-path.potan<- paste(working.dir, "/", output.folder.names[5], "/", sep = "")
-path.finan<- paste(working.dir, "/", output.folder.names[6], "/", sep = "")
-path.results<- paste(working.dir, "/", output.folder.names[7], "/", sep = "")
-path.extr<- paste(working.dir, "/", output.folder.names[8], "/", sep = "")
+path.figures <- paste(working.dir, "/", output.folder.names[2], "/", sep = "")
+path.raw.data <- paste(working.dir, "/", output.folder.names[3], "/", sep = "")
+path.analysis <- paste(working.dir, "/", output.folder.names[4], "/", sep = "")
+path.results <- paste(working.dir, "/", output.folder.names[5], "/", sep = "")
+
 
 
 # This file is the first step in my final project
@@ -271,13 +277,26 @@ View(lung_adenocarcinoma_ras_raf_mek_jnk_signalling)
 # we can see just from the csv that there are 26 genes
 # can notice the different types of mutations MUT, AMP, HOMDEL, MUT;AMP, NA
 
+#------look at structure-----
+head(mat)
+dim(mat) # for dimensions
+nrow(mat) # for number of rows 
+ncol(mat) # for number of col
+
+# check if it is matrix
+class(mat)
+
 
 # now, just to see what happens, let's create a plot with the imported data
 # with default complexheatmap settings... only specify legend name "mat"
 ComplexHeatmap:: Heatmap(mat, name = "mat")
+# woah it is different this time... that is kinda awesome
+# the default plot show the case ID on the left side of the plot with colours 
+# coressponding to the samples in the huge legend that doesn;t fit on the page 
+head(mat)
 # well, that is a bit ugly... what is going on with the labels 
 # let's save it for now though becasue it's so odd
-pdf(file = paste(path.figures,"lun.oddness.pdf", sep="/"))
+pdf(file = paste(path.figures,"lung.oddness.pdf", sep="/"))
 ComplexHeatmap:: Heatmap(mat, name = "mat")
 dev.off()
 
@@ -293,6 +312,9 @@ str(mat)
 mat[is.na(mat)] = ""
 # look at row names and process the data set 
 # Not completely sure why/why they are doing this section....
+# this is trasnformaing the data frame into a matrix in order for it be 
+# be compatible with the plotting functions
+
 rownames(mat) = mat[, 1]
 mat = mat[, -1]
 mat=  mat[, -ncol(mat)]
@@ -301,9 +323,14 @@ mat[1:3, 1:3]
 # this removed a lot of values... but I am still not quite sure if it 
 # removed all of the NA values 
 # let's check the structure again
-str(mat)
-
-
+head(mat)
+# now let's plot it again and see if it works 
+# hopefully the error messages/warning will not show up now that it is a matix
+ComplexHeatmap:: Heatmap(mat, name = "mat")
+# interesting
+# so now the genes are order on the right of the plot
+# I think the samples on on the bottom 
+# this is quite different than the first plot before the data was processed 
 #----------------------------------------------------------------------
 #--------mutation as colours----------------------------------------
 #----------------------------------------------------------------
@@ -340,8 +367,23 @@ alter_fun = list(
 col
 # okay it seems to be all good yay
 # can it be translated into a plot though????
+# create a title for the plot so that it isn't so crazy
 
-#--------------------------------------------------------
+col = c("MUT" = "#008000", "AMP" = "red", "HOMDEL" = "blue")
+
+oncoPrint(mat, get_type = function(x) strsplit(x, ";")[[1]],
+          alter_fun = alter_fun, col = col, 
+          column_title = "OncoPrint for TCGA Lung Adenocarcinoma, genes in Ras Raf MEK JNK signalling",
+          heatmap_legend_param = list(title = "Alternations", at = c("AMP", "HOMDEL", "MUT"), 
+                                      labels = c("Amplification", "Deep deletion", "Mutation")))
+# want to remove NA values from the matrix 
+oncoPrint(mat,
+          alter_fun = alter_fun, col = col, 
+          remove_empty_columns = TRUE, remove_empty_rows = TRUE,
+          column_title = column_title, heatmap_legend_param = heatmap_legend_param)
+
+
+---------------
 #-----------plotting mutations as colours???-------------
 #-------------------------------------------------------
 
