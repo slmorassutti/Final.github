@@ -300,7 +300,7 @@ col
 column_title = ("Mutated genes in the Ras Raf MEK JNK signalling the Lung Adenocarcinoma")
 heatmap_legend_param = list(title = "Alternations", at = c("HOMDEL", "AMP", "MUT"), 
                             labels = c("Deep deletion", "Amplification", "Mutation"))
-ComplexHeatmap::oncoPrint(mat, alter_fun = alter_fun, col = col, column_title = column_title, 
+oncoPrint(mat, alter_fun = alter_fun, col = col, column_title = column_title, 
                           heatmap_legend_param = heatmap_legend_param)
 
 # this doesn;t seem to want to work...
@@ -346,6 +346,7 @@ dev.off()
 
 
 
+#------------try again--------------------
 
 
 
