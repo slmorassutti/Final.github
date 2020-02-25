@@ -11,11 +11,9 @@ source("https://bioconductor.org/biocLite.R")
 biocLite("ComplexHeatmap")
 library(ComplexHeatmap)
 
-if (!requireNamespace("BiocManager", quietly = TRUE))
-  install.packages("BiocManager")
-BiocManager::install()
-BiocManager::install(version = "3.10")
 library(BiocManager)
+#BiocManager::install("ComplexHeatmap")
+
 
 library(dplyr)
 # libraries needed
@@ -24,6 +22,7 @@ library(devtools)
 install_github("jokergoo/ComplexHeatmap")
 library(circlize)
 library(cluster)
+
 
 
 # index 
