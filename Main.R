@@ -204,6 +204,14 @@ ComplexHeatmap::Heatmap(matrix.small, name = "matrix.small",
                         column_title = "Title of columns", cluster_rows = FALSE, 
                         cluster_columns = FALSE)
 # looks pretty different!
+# save as pdf and send to figures
+pdf(file = paste(path.figures,"Heatmap small.noclust.pdf", sep="/"))
+ComplexHeatmap::Heatmap(matrix.small, name = "matrix.small", 
+                        row_title = "Title of rows", 
+                        column_title = "Title of columns", cluster_rows = FALSE, 
+                        cluster_columns = FALSE)
+dev.off()
+
 
 #clustering can also been shown on specififcc sides of heatmap
 # for example, t show clustering on the right side of rows, and 
@@ -214,6 +222,14 @@ ComplexHeatmap:: Heatmap(matrix.small, name = "matrix.small",
                          column_title = "Title of columns",
                          row_dend_side = "right", 
                          column_dend_side = "bottom")
+# save as pdf and send to figures
+pdf(file = paste(path.figures,"Heatmap small clust on sides.pdf", sep="/"))
+ComplexHeatmap:: Heatmap(matrix.small, name = "matrix.small", 
+                         row_title = "Title of rows", 
+                         column_title = "Title of columns",
+                         row_dend_side = "right", 
+                         column_dend_side = "bottom")
+dev.off()
 
 #------------Change the colours---------------------------------------
 # let's play around with some colours!

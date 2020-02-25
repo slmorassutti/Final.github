@@ -139,9 +139,10 @@ ComplexHeatmap::Heatmap(matrix.small, name = "matrix.small",
                         row_title = "Title of rows", 
                         column_title = "Title of columns", cluster_rows = FALSE, 
                         cluster_columns = FALSE)
+
 # looks pretty different!
 
-#clustering can also been shown on specififcc sides of heatmap
+#clustering can also been shown on specific sides of heatmap
 # for example, t show clustering on the right side of rows, and 
 # the bottom of the columns
 # to do this use the function row_dend_side = "", column_dend_side
