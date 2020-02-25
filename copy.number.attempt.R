@@ -72,6 +72,8 @@ head(m_cn_data)
 # save it as a data frame here, but I am not sure if it would still work 
 # as just an object??
 
+class(m_cn_data)
+
 # Save chromosome column (CHR)
 # save as a fata frame
 chromosome_anno <- data.frame(chrom = cn_data$V1)
@@ -79,9 +81,9 @@ chromosome_anno
 # yay now we have a data frame with only one column
 
 
-ComplexHeatmap::Heatmap(cn_data)
-Heatmap(cn_data)
+Heatmap(m_cn_data)
 
+heatmap(m_cn_data)
 # okay so seeing as the package won't work let's use the shitty default setting
 heatmap(cn_data)
 # nope okay now nothing is working
