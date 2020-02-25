@@ -61,7 +61,7 @@ matrix.small <- cbind(matrix.small, 1:4)
 matrix.small
 # great!
 
-#----name row/col
+#----name row/col-------
 # now let's get some names on these bad boys
 # we have 4 columns and 4 rows
 rownames(matrix.small) <- c("row1", "row2", "row3", "row4")
@@ -80,9 +80,11 @@ heatmap(matrix.small)
 # this has A LOT of uses 
 
 
-#okay, back to this little weird small matrix heatmap
-# let's get a legend on there
+# okay, back to this little weird small matrix heatmap
+# let's get a legend on there and some titles on here
 # NOW we gotta get some packages in here
+# default heatmap function does not have the same capabilities as other packages
+# complexheatmap is used a lot
 
 
 #---------libraries----------------------------------
@@ -90,9 +92,14 @@ heatmap(matrix.small)
 source("https://bioconductor.org/biocLite.R")
 biocLite("ComplexHeatmap")
 library(ComplexHeatmap)
-
 library(BiocManager)
 #BiocManager::install("ComplexHeatmap")
+library(dplyr)
+library(devtools)
+# and the package complex heatmap 
+install_github("jokergoo/ComplexHeatmap")
+library(circlize)
+library(cluster)
 
 # still having troubles, but we can do some of this without all the right 
 # packages
@@ -106,28 +113,47 @@ ComplexHeatmap::Heatmap(matrix.small)
 
 #add a legend title use the name = ""
 ComplexHeatmap::Heatmap(matrix.small, name = "matrix.small")
-
+# notice how the plot has been clustered based on similarity of values
+# the dendrograms groups these relationships
 
 #---titles-----
 # to create a title 
-# use the command row_title_gp, or column_title_gp
+# use the command row_title_, or column_title_
 ComplexHeatmap::Heatmap(matrix.small, name = "matrix.small", row_title = "Title of rows", 
                         column_title = "Title of columns")
 
 
-#---------------------------------------------------
 
+#-----clustering---
+# can also turn clustering off, do for rows and then columns
+# depending on if clustering is needed or not
+# let's get rid of default clustering 
+# used function cluster_rows or cluster_columns = FALSE
+ComplexHeatmap::Heatmap(matrix.small, name = "matrix.small", 
+                        row_title = "Title of rows", 
+                        column_title = "Title of columns", cluster_rows = FALSE)
+# first let's remove the clustering of rows
+# it's still kinda similar
+# let's see what happens when we remove all clustering
+ComplexHeatmap::Heatmap(matrix.small, name = "matrix.small", 
+                        row_title = "Title of rows", 
+                        column_title = "Title of columns", cluster_rows = FALSE, 
+                        cluster_columns = FALSE)
+# looks pretty different!
 
+#clustering can also been shown on specififcc sides of heatmap
+# for example, t show clustering on the right side of rows, and 
+# the bottom of the columns
+# to do this use the function row_dend_side = "", column_dend_side
+ComplexHeatmap:: Heatmap(matrix.small, name = "matrix.small", 
+                         row_title = "Title of rows", 
+                         column_title = "Title of columns",
+                         row_dend_side = "right", 
+                         column_dend_side = "bottom")
 
-
-
-
-col_fun = colorRamp2(c(-2, 0, 2), c("mediumvioletred", "white", "mediumspringgreen"))
-col.fun <- col_fun(seq(-3, 3))
-ComplexHeatmap::Heatmap(mat, name = "mat", col = col.fun)
-
-
-
+#------------Change the colours---------------------------------------
+# let's play around with some colours!
+# going to use colorRamp2 to do this
 # if matrix is continuous, provide a vector of colours 
 # the colours will be interpolated linearly
 # however, mapping isn't robust against outliers
@@ -137,6 +163,28 @@ ComplexHeatmap::Heatmap(mat, name = "mat", col = col.fun)
 # therefore, if you set the colour to the max/min
 # of the matrix, it will be identical to the
 # default plot
+
+# let's change some colours!!!
+# create a function and call is col_fun
+# input the range of values (we already know these becasue we created them)
+# but can also get quickly by the min and max commands
+min(matrix.small) #1
+max(matrix.small) #12
+
+# because our range is from 1-12, we can select three colours and assign them 
+# to the min, mid, max 
+col_fun = colorRamp2(c(1, 6, 12), c("mediumvioletred", "white", "mediumspringgreen"))
+# now we can input the sequence (how many values in our colour range)
+col.fun <- col_fun(seq(1, 12))
+ComplexHeatmap::Heatmap(matrix.small, name = "matrix.small", col = col.fun, 
+                        row_title = "Title of rows", 
+                        column_title = "Title of columns")
+
+# see how this plot show the spread in values much better than the default colours
+# the legend is much nicer 
+# the clustering also creates groups 
+
+
 
 
 
