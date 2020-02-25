@@ -71,7 +71,7 @@ matrix.small
 # sweet
 
 
-#----playing with default plots)
+#----playing with default plots
 # use basic default
 heatmap(matrix.small)
 # wooo now we see a plot with the default colours and clustering of values 
@@ -100,14 +100,31 @@ library(BiocManager)
 # check the default setting as it is different in this package
 ComplexHeatmap::Heatmap(matrix.small)
 # isn't that cute!
+# are all positive between the input values are positive
+#default clustering has changed the order of the col/rows
+# this groups values together
+
+#add a legend title use the name = ""
+ComplexHeatmap::Heatmap(matrix.small, name = "matrix.small")
+
+
+#---titles-----
+# to create a title 
+# use the command row_title_gp, or column_title_gp
+ComplexHeatmap::Heatmap(matrix.small, name = "matrix.small", row_title = "Title of rows", 
+                        column_title = "Title of columns")
+
+
 #---------------------------------------------------
 
 
-# are all positive between the input values were
 
 
 
 
+col_fun = colorRamp2(c(-2, 0, 2), c("mediumvioletred", "white", "mediumspringgreen"))
+col.fun <- col_fun(seq(-3, 3))
+ComplexHeatmap::Heatmap(mat, name = "mat", col = col.fun)
 
 
 
