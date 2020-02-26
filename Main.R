@@ -264,6 +264,32 @@ ComplexHeatmap::Heatmap(matrix.small, name = "matrix.small", col = col.fun,
 # the legend is much nicer 
 # the clustering also creates groups 
 
+# save as pdf and send to figures
+pdf(file = paste(path.figures,"Heatmap small new col.1.pdf", sep="/"))
+ComplexHeatmap::Heatmap(matrix.small, name = "matrix.small", col = col.fun, 
+                        row_title = "Title of rows", 
+                        column_title = "Title of columns")
+dev.off()
+
+# however, it is common practice to assign darker colours the larger values 
+# so if we switch these colours it should represent this little matrix better
+
+
+# let's repeat the above however change the order of colours
+col_fun = colorRamp2(c(1, 6, 12), c("mediumspringgreen", "white", "mediumvioletred"))
+# now we can input the sequence (how many values in our colour range)
+col.fun <- col_fun(seq(1, 12))
+ComplexHeatmap::Heatmap(matrix.small, name = "matrix.small", col = col.fun, 
+                        row_title = "Title of rows", 
+                        column_title = "Title of columns")
+
+
+#cool! let's save it and compare it to the previous
+pdf(file = paste(path.figures,"Heatmap small new col.2.pdf", sep="/"))
+ComplexHeatmap::Heatmap(matrix.small, name = "matrix.small", col = col.fun, 
+                        row_title = "Title of rows", 
+                        column_title = "Title of columns")
+dev.off()
 
 #----------------------------------------------------------------------------
 #----- Generate a slightly bigger and different random matrix---------------
@@ -332,7 +358,7 @@ dev.off()
 # in this map, the colors aren't affected by outliers
 # the color mapping function is robost to outliers
 
-col_fun = colorRamp2(c(-2, 0, 2), c("mediumvioletred", "white", "mediumspringgreen"))
+col_fun = colorRamp2(c(-2, 0, 2), c("mediumspringgreen", "white", "mediumvioletred"))
 col.fun <- col_fun(seq(-3, 3))
 ComplexHeatmap::Heatmap(mat, name = "mat", col = col.fun)
 # the negative values are mediumvioletred and the positive are mediumspringgreen
@@ -340,6 +366,17 @@ ComplexHeatmap::Heatmap(mat, name = "mat", col = col.fun)
 # save as pdf and send to figures folder!
 pdf(file = paste(path.figures,"Random Heatmap2.pdf", sep="/"))
 ComplexHeatmap::Heatmap(mat, name = "mat", col = col.fun)
+dev.off()
+
+# let's do the same thing but make the middle value equal black for more contrast
+col_fun = colorRamp2(c(-2, 0, 2), c("mediumspringgreen", "black", "mediumvioletred"))
+col.fun.2 <- col_fun(seq(-3, 3))
+ComplexHeatmap::Heatmap(mat, name = "mat", col = col.fun.2)
+# the negative values are mediumvioletred and the positive are mediumspringgreen
+
+# save as pdf and send to figures folder!
+pdf(file = paste(path.figures,"Random Heatmap.black.1.pdf", sep="/"))
+ComplexHeatmap::Heatmap(mat, name = "mat", col = col.fun.2)
 dev.off()
 
 # can also create a rainbow color scheme 
@@ -401,27 +438,46 @@ dev.off()
 # it is used by get.gpar()
 
 # use the command row_title_gp, or column_title_gp
-ComplexHeatmap::Heatmap(mat, name = "mat", col = col.fun, row_title = "Title of rows", 
+ComplexHeatmap::Heatmap(mat, name = "mat", col = col.fun.2, row_title = "Title of rows", 
         column_title = "Title of columns")
 # save as pdf and send to figures folder
 pdf(file = paste(path.figures,"Random Heatmap titles.1.pdf", sep="/"))
-ComplexHeatmap::Heatmap(mat, name = "mat", col = col.fun, row_title = "Title of rows", 
+ComplexHeatmap::Heatmap(mat, name = "mat", col = col.fun.2, row_title = "Title of rows", 
                         column_title = "Title of columns")
 dev.off()
 
+# now let's give the columns and rows a title and specify the fontsize and type
+# let's use fontsize 15 and bold
+# use the column_title_gp = gpar() function to specify 
+ComplexHeatmap::Heatmap(mat, name = "mat", col = col.fun.2, 
+                        column_title = "column title", 
+                        column_title_gp = gpar(fontsize = 15, fontface = "bold"), 
+                        row_title = "row title", 
+                        row_title_gp = gpar(fontsize = 15, fontface = "bold"))
 
-# now try change the font and title the entire heatmap title
-ComplexHeatmap::Heatmap(mat, name = "mat", column_title = "title", 
-                        column_title_gp = gpar(fontsize = 15, fontface = "bold"))
-# jk gpar is mean
-# mmmm okay I don't know why this isn't working 
+pdf(file = paste(path.figures,"Random Heatmap titles.2.pdf", sep="/"))
+ComplexHeatmap::Heatmap(mat, name = "mat", col = col.fun.2, 
+                        column_title = "column title", 
+                        column_title_gp = gpar(fontsize = 15, fontface = "bold"), 
+                        row_title = "row title", 
+                        row_title_gp = gpar(fontsize = 15, fontface = "bold"))
+dev.off()
 
-# title angles
-# in this package you can also change the angle of the titles
-# very useful! 
+# let's so the same thing again however with the col.fun colour scheme instead 
+# this will allow for a comparison of the plots
+ComplexHeatmap::Heatmap(mat, name = "mat", col = col.fun, 
+                        column_title = "column title", 
+                        column_title_gp = gpar(fontsize = 15, fontface = "bold"), 
+                        row_title = "row title", 
+                        row_title_gp = gpar(fontsize = 15, fontface = "bold"))
 
-
-
+pdf(file = paste(path.figures,"Random Heatmap titles.white.3.pdf", sep="/"))
+ComplexHeatmap::Heatmap(mat, name = "mat", col = col.fun, 
+                        column_title = "column title", 
+                        column_title_gp = gpar(fontsize = 15, fontface = "bold"), 
+                        row_title = "row title", 
+                        row_title_gp = gpar(fontsize = 15, fontface = "bold"))
+dev.off()
 #----clustering-------------
 # maybe the most important aspect/function of heatmap visulaization
 # there are many clustering methods
@@ -481,22 +537,21 @@ View(lung_adenocarcinoma_ras_raf_mek_jnk_signalling)
 # can notice the different types of mutations MUT, AMP, HOMDEL, MUT;AMP, NA
 
 #------look at structure-----
-head(mat)
 dim(mat) # for dimensions
 nrow(mat) # for number of rows 
 ncol(mat) # for number of col
 
-# check if it is matrix
-class(mat)
-
 
 # now, just to see what happens, let's create a plot with the imported data
+# as this is always the first step in an analysis
 # with default complexheatmap settings... only specify legend name "mat"
+# right away we get a warning that this is a dtaa frame and it must be converted
 ComplexHeatmap:: Heatmap(mat, name = "mat")
+# this is not plotting now.... but before it created a hilarious graph...
+
 # woah it is different this time... that is kinda awesome
 # the default plot show the case ID on the left side of the plot with colours 
 # coressponding to the samples in the huge legend that doesn;t fit on the page 
-head(mat)
 # well, that is a bit ugly... what is going on with the labels 
 # let's save it for now though becasue it's so odd
 pdf(file = paste(path.figures,"lung.oddness.pdf", sep="/"))
@@ -504,36 +559,70 @@ ComplexHeatmap:: Heatmap(mat, name = "mat")
 dev.off()
 
 
-# look at structure
-str(mat)
-# also a lot of NA
+#-----process and transform data frame to matrix---------------
+# Now we need to duoble check to see if indeed out data is not a matrix
+class(mat) 
+# this is a data frame
+# we know that we cannot use the heatmap function on a data frame...
+# so we need to transform this data into a matrix
 
 
-# THIS SECTION??????
-# was described as process and examining the row and column
-# names however, I am still unsure of what EXACTLY is happening and why here.....
+head(mat)
+# we can see that the genes are formated across the colummns, and samples
+# are located in the first column
+# we want to do a few things to this data set to change this
+# it needs to be a matrix
+# we need to flip the axis and re order where the genes and samples are within 
+# the matrix
+
+# okay let's do it! 
 mat[is.na(mat)] = ""
 # look at row names and process the data set 
-# Not completely sure why/why they are doing this section....
-# this is trasnformaing the data frame into a matrix in order for it be 
-# be compatible with the plotting functions
+# the following section is make the formating the data so that it will plot 
+# in the desired fashion
+# the goal is to the genes lined up on the left side of the matrix 
+# and the samples organzied column wise across the plot
 
 rownames(mat) = mat[, 1]
 mat = mat[, -1]
 mat=  mat[, -ncol(mat)]
 mat = t(as.matrix(mat))
 mat[1:3, 1:3]
-# this removed a lot of values... but I am still not quite sure if it 
-# removed all of the NA values 
-# let's check the structure again
-head(mat)
+str(mat)
+#check class to see if this transformation worked
+class(mat) 
+# nice it is a matrix
+
 # now let's plot it again and see if it works 
 # hopefully the error messages/warning will not show up now that it is a matix
-ComplexHeatmap:: Heatmap(mat, name = "mat")
+ComplexHeatmap::Heatmap(mat, name = "mat")
+
 # interesting
-# so now the genes are order on the right of the plot
-# I think the samples on on the bottom 
+# so now the genes are are the right of the plot
+# the samples on on the bottom 
 # this is quite different than the first plot before the data was processed 
+# there is a lot going on here 
+# save as pdf
+pdf(file = paste(path.figures,"lung,matrix.1.pdf", sep="/"))
+ComplexHeatmap:: Heatmap(mat, name = "mat")
+dev.off()
+
+# let's add some row and column titles
+# note: I don't know why this plot is different every time you run the code
+ComplexHeatmap::Heatmap(mat, name = "mat", 
+                        column_title = "Lung adenocarcinoma Samples", 
+                        column_title_gp = gpar(fontsize = 15, fontface = "bold"), 
+                        row_title = "Genes", 
+                        row_title_gp = gpar(fontsize = 15, fontface = "bold"))
+
+# save weird plot! and discuss it
+pdf(file = paste(path.figures,"lung.matrix.2.pdf", sep="/"))
+ComplexHeatmap::Heatmap(mat, name = "mat", 
+                        column_title = "Lung adenocarcinoma Samples", 
+                        column_title_gp = gpar(fontsize = 15, fontface = "bold"), 
+                        row_title = "Genes", 
+                        row_title_gp = gpar(fontsize = 15, fontface = "bold"))
+dev.off()
 #----------------------------------------------------------------------
 #--------mutation as colours----------------------------------------
 #----------------------------------------------------------------
@@ -573,10 +662,10 @@ col
 # create a title for the plot so that it isn't so crazy
 
 col = c("MUT" = "#008000", "AMP" = "red", "HOMDEL" = "blue")
-
+# -------so here we run into trouble-------------------------
 oncoPrint(mat, get_type = function(x) strsplit(x, ";")[[1]],
           alter_fun = alter_fun, col = col, 
-          column_title = "OncoPrint for TCGA Lung Adenocarcinoma, genes in Ras Raf MEK JNK signalling",
+          column_title = "Lung Adenocarcinoma genes in Ras Raf MEK JNK signalling",
           heatmap_legend_param = list(title = "Alternations", at = c("AMP", "HOMDEL", "MUT"), 
                                       labels = c("Amplification", "Deep deletion", "Mutation")))
 # want to remove NA values from the matrix 

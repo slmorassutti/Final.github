@@ -226,3 +226,6 @@ max(mat) # 2.62052
 # to get the lendend and legend name
 # use function name = "", then put the name of legend wooooo
 ComplexHeatmap::Heatmap(mat, name = "mat")
+
+# for fun let's make it a rainbow
+ComplexHeatmap::Heatmap(mat, name = "mat", col = rev(rainbow(10)))
