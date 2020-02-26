@@ -29,9 +29,10 @@ library(cluster)
 # index 
 # libraries 
 # setting up working directory, folders, and paths
-#
-#
-#
+# building and experimenting with a small matrix
+# expanding heatmap exploration with a larger matrix
+# applying skills to real data set!
+# problems....
 
 #------------------------------------------------------------------------
 #------------setup working directory, folders, and pathways------------------
