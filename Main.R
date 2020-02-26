@@ -665,5 +665,5 @@ col
 # SAD! so from here on this is proving to be very tricky
 # plotting anything with the method provided in the complexheatmap
 # package is only results in a lot of errors
-# the rest of this code can be found in the "troubled" folder
+# the rest of this code can be found in the "troubled" script in analysis
 # -------g) run into trouble-------------------------
