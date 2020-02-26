@@ -54,7 +54,7 @@ path.clean <- paste(working.dir, "/", output.folder.names[1], "/", sep = "")
 path.figures <- paste(working.dir, "/", output.folder.names[2], "/", sep = "")
 path.raw.data <- paste(working.dir, "/", output.folder.names[3], "/", sep = "")
 path.analysis <- paste(working.dir, "/", output.folder.names[4], "/", sep = "")
-path.results <- paste(working.dir, "/", output.folder.names[5], "/", sep = "")
+
 
 
 
