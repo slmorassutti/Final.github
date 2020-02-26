@@ -229,3 +229,5 @@ ComplexHeatmap::Heatmap(mat, name = "mat")
 
 # for fun let's make it a rainbow
 ComplexHeatmap::Heatmap(mat, name = "mat", col = rev(rainbow(10)))
+
+# thank you! 
